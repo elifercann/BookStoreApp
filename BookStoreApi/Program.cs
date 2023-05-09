@@ -1,16 +1,17 @@
-using BookStoreApi.Repositories;
-using Microsoft.EntityFrameworkCore;
+
+using BookStoreApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers().AddNewtonsoftJson();
+//applicationpart ile reflection konuldu presentation katmanýný da assemnlyrefence sýnýfý sayesinde çözümleyebiliyor oradaki controllerda kullanýlabiliyor bu sayede
+builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyRefence).Assembly).AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationContext>(opt=>opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
-
+builder.Services.AddConfigureSqlContext(builder.Configuration);
+builder.Services.AddConfigureRepositoryManager();
+builder.Services.AddConfigureServiceManager();
 
 var app = builder.Build();
 
