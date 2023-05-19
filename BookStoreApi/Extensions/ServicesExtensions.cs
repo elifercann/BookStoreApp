@@ -26,5 +26,13 @@ namespace BookStoreApi.Extensions
 
 
         }
+        
+          public static void AddConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerService,LoggerManager>();
+
+
+        }
+
     }
 }
