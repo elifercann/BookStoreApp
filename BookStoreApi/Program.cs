@@ -1,6 +1,7 @@
 
 using BookStoreApi.Extensions;
 using NLog;
+using Services.Abstract;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -16,6 +17,9 @@ builder.Services.AddConfigureServiceManager();
 builder.Services.AddConfigureLoggerService();
 
 var app = builder.Build();
+//ihtiyac duyulan servis bu sekilde alýnýyor
+var logger=app.Services.GetRequiredService<ILoggerService>();
+app.ConfigureExceptionHandler(logger);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -23,7 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+if (app.Environment.IsProduction())
+{
+    app.UseHsts();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
