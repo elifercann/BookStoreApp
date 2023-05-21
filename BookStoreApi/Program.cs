@@ -15,6 +15,7 @@ builder.Services.AddConfigureSqlContext(builder.Configuration);
 builder.Services.AddConfigureRepositoryManager();
 builder.Services.AddConfigureServiceManager();
 builder.Services.AddConfigureLoggerService();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor
