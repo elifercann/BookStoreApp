@@ -10,6 +10,8 @@ namespace BookStoreApi.Utilities.AutoMapper
         {
             CreateMap<BookDtoForUpdate, Book>();
             CreateMap<Book, BookDtoForUpdate>();
+            CreateMap<Book, BookDto>();
+           
         }
     }
 }
