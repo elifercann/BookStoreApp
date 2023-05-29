@@ -35,12 +35,14 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOneBook([FromBody] Book book)
+        public IActionResult CreateOneBook([FromBody] BookDtoForInsertion bookDto)
         {
 
-            if (book == null)
+            if (bookDto == null)
                 return BadRequest();
-            _manager.BookService.CreateOneBook(book);
+            if(!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+            var book=_manager.BookService.CreateOneBook(bookDto);
 
             return StatusCode(201, book);
 
@@ -52,7 +54,9 @@ namespace Presentation.Controllers
 
             if (bookDto == null)
                 return BadRequest();
-            _manager.BookService.UpdateOneBook(id, bookDto, true);
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+            _manager.BookService.UpdateOneBook(id, bookDto, false);//takibi managerda yapıldığı için burada yapılmasına gerek yok
 
             return NoContent();
 
@@ -68,14 +72,20 @@ namespace Presentation.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult PartiallyUpdateOneBook([FromRoute] int id, [FromBody] JsonPatchDocument<Book> bookPatch)
+        public IActionResult PartiallyUpdateOneBook([FromRoute] int id, [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
         {
-            var entity = _manager.BookService.GetOneBookById(id, true);//değişiklikler izleniyor
-           
-            bookPatch.ApplyTo(entity);
-            
-            _manager.BookService.UpdateOneBook(id, new BookDtoForUpdate(entity.Id,entity.Title,entity.Price), true);
+            if (bookPatch is null)
+                return BadRequest();
 
+            var result = _manager.BookService.GetOneBookForPatch(id, false);
+           
+            bookPatch.ApplyTo(result.bookDtoForUpdate,ModelState);
+            TryValidateModel(result.bookDtoForUpdate);
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            _manager.BookService.SaveChangesForPatch(result.bookDtoForUpdate,result.book);
             return NoContent();
 
         }
