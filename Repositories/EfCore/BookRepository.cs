@@ -1,11 +1,7 @@
 ﻿using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.EfCore
 {
@@ -20,9 +16,9 @@ namespace Repositories.EfCore
 
         public void DeleteOneBook(Book book) => Delete(book);
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync(bool trankChanges)
+        public async Task<IEnumerable<Book>> GetAllBooksAsync(BookParameters bookParameters,bool trankChanges)
         {
-            return await FindAll(trankChanges).OrderBy(x=>x.Id).ToListAsync();
+            return await FindAll(trankChanges).OrderBy(x=>x.Id).Skip((bookParameters.PageNumber-1)*bookParameters.PageSize).Take(bookParameters.PageSize).ToListAsync();
                 
         }
 
