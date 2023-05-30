@@ -3,10 +3,12 @@ using Entities.Exceptions;
 using Entities.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using Services.Abstract;
 
 namespace Presentation.Controllers
 {
+    [ServiceFilter(typeof(LogFilterAttribute))]
     [ApiController]
     [Route("api/books")]
     public class BooksController : ControllerBase
@@ -18,74 +20,65 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllBooks()
+        public async Task<IActionResult> GetAllBooksAsync()
         {
-            var books = _manager.BookService.GetAllBooks(false);
+            var books = await _manager.BookService.GetAllBooksAsync(false);
             return Ok(books);
 
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetOneBook([FromRoute] int id)
+        public async Task<IActionResult> GetOneBookAsync([FromRoute] int id)
         {
-            
-            var book = _manager.BookService.GetOneBookById(id, false);
-            
+
+            var book = await _manager.BookService.GetOneBookByIdAsync(id, false);
+
             return Ok(book);
         }
-
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [HttpPost]
-        public IActionResult CreateOneBook([FromBody] BookDtoForInsertion bookDto)
+        public async Task<IActionResult> CreateOneBookAsync([FromBody] BookDtoForInsertion bookDto)
         {
 
-            if (bookDto == null)
-                return BadRequest();
-            if(!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-            var book=_manager.BookService.CreateOneBook(bookDto);
+            var book = await _manager.BookService.CreateOneBookAsync(bookDto);
 
             return StatusCode(201, book);
 
         }
-
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [HttpPut("{id}")]
-        public IActionResult UpdateOneBook([FromRoute] int id, [FromBody] BookDtoForUpdate bookDto)
+        public async Task<IActionResult> UpdateOneBookAsync([FromRoute] int id, [FromBody] BookDtoForUpdate bookDto)
         {
 
-            if (bookDto == null)
-                return BadRequest();
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-            _manager.BookService.UpdateOneBook(id, bookDto, false);//takibi managerda yapıldığı için burada yapılmasına gerek yok
-
+            await _manager.BookService.UpdateOneBookAsync(id, bookDto, false);//takibi managerda yapıldığı için burada yapılmasına gerek yok
             return NoContent();
 
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteOneBook([FromRoute] int id)
+        public async Task<IActionResult> DeleteOneBookAsync([FromRoute] int id)
         {
-            _manager.BookService.DeleteOneBook(id, false);
+            await _manager.BookService.DeleteOneBookAsync(id, false);
 
             return NoContent();
 
         }
 
         [HttpPatch("{id}")]
-        public IActionResult PartiallyUpdateOneBook([FromRoute] int id, [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
+        public async Task<IActionResult> PartiallyUpdateOneBookAsync([FromRoute] int id, [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
         {
             if (bookPatch is null)
                 return BadRequest();
 
-            var result = _manager.BookService.GetOneBookForPatch(id, false);
-           
-            bookPatch.ApplyTo(result.bookDtoForUpdate,ModelState);
+            var result = await _manager.BookService.GetOneBookForPatchAsync(id, false);
+
+            bookPatch.ApplyTo(result.bookDtoForUpdate, ModelState);
             TryValidateModel(result.bookDtoForUpdate);
 
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            _manager.BookService.SaveChangesForPatch(result.bookDtoForUpdate,result.book);
+            await _manager.BookService.SaveChangesForPatchAsync(result.bookDtoForUpdate, result.book);
             return NoContent();
 
         }

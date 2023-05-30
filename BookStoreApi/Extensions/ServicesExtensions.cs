@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Presentation.ActionFilters;
 using Repositories.Abstract;
 using Repositories.EfCore;
 using Services.Abstract;
@@ -30,6 +31,13 @@ namespace BookStoreApi.Extensions
           public static void AddConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerService,LoggerManager>();
+
+
+        }
+        public static void AddConfigureActionFilters(this IServiceCollection services)
+        {
+            services.AddScoped<ValidationFilterAttribute>();//IoC kaydı
+            services.AddSingleton<LogFilterAttribute>();
 
 
         }

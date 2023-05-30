@@ -2,6 +2,7 @@
 using BookStoreApi.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Presentation.ActionFilters;
 using Services.Abstract;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddControllers(config =>
     .AddXmlDataContractSerializerFormatters()
     .AddApplicationPart(typeof(Presentation.AssemblyRefence).Assembly).AddNewtonsoftJson();
 
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
@@ -30,6 +32,7 @@ builder.Services.AddConfigureRepositoryManager();
 builder.Services.AddConfigureServiceManager();
 builder.Services.AddConfigureLoggerService();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddConfigureActionFilters();
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor

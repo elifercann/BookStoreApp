@@ -1,9 +1,4 @@
 ﻿using Repositories.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.EfCore
 {
@@ -20,9 +15,9 @@ namespace Repositories.EfCore
         //lazy loadingle nesne ancak ve ancak kullanıldığı anda ilgili ifade newlenecek
         public IBookRepository Book => _bookRepository.Value;
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
