@@ -33,6 +33,7 @@ builder.Services.AddConfigureServiceManager();
 builder.Services.AddConfigureLoggerService();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddConfigureActionFilters();
+builder.Services.AddConfigureCors();
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor
@@ -50,6 +51,8 @@ if (app.Environment.IsProduction())
     app.UseHsts();
 }
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

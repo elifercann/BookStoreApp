@@ -8,6 +8,6 @@
         public int TotalCount { get; set; }
 
         public bool HasPrevious => CurentPage > 1;
-        public bool HasPAge => CurentPage < TotalCount;
+        public bool HasPage => CurentPage < TotalPage;
     }
 }

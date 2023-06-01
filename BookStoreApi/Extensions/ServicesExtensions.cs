@@ -42,5 +42,13 @@ namespace BookStoreApi.Extensions
 
         }
 
+        public static void AddConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("X-Pagination"));
+            });
+        }
+
     }
 }
