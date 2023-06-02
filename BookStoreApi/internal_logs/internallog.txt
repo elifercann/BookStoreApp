@@ -86,3 +86,11 @@
 2023-06-01 18:28:50.4767 Info Message Template Auto Format enabled
 2023-06-01 18:28:50.5073 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-06-01 18:28:50.5202 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\ercan\source\repos\BookStoreApp\BookStoreApi\nlog.config
+2023-06-01 18:32:39.4032 Info AppDomain Shutting down. LogFactory closing...
+2023-06-01 18:32:39.4032 Info LogFactory has been closed.
+2023-06-02 15:51:15.2590 Info Message Template Auto Format enabled
+2023-06-02 15:51:15.4197 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-06-02 15:51:15.4713 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\ercan\source\repos\BookStoreApp\BookStoreApi\nlog.config
+2023-06-02 16:02:36.3295 Info Message Template Auto Format enabled
+2023-06-02 16:02:36.4915 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-06-02 16:02:36.5363 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\ercan\source\repos\BookStoreApp\BookStoreApi\nlog.config

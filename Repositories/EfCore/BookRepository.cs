@@ -5,7 +5,8 @@ using Repositories.Abstract;
 
 namespace Repositories.EfCore
 {
-    public class BookRepository : RepositoryBase<Book>, IBookRepository
+    //class son haline geldi kalitimla devralinmasini istenmedigi için sadece genisletme islemi yapilmasi istendigi sealed olarak isaretlendi
+    public sealed class BookRepository : RepositoryBase<Book>, IBookRepository
     {
         public BookRepository(ApplicationContext context) : base(context)
         {
@@ -18,7 +19,8 @@ namespace Repositories.EfCore
 
         public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters,bool trankChanges)
         {
-            var books = await FindAll(trankChanges).OrderBy(x => x.Id).ToListAsync();
+            var books = await FindAll(trankChanges).FilterBooks(bookParameters.MinPrice,bookParameters.MaxPrice)
+                .OrderBy(x => x.Id).ToListAsync();
             return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber,bookParameters.PageSize);
                 
         }
