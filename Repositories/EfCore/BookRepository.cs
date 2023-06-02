@@ -2,6 +2,7 @@
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
+using Repositories.EfCore.Extensions;
 
 namespace Repositories.EfCore
 {
@@ -19,7 +20,9 @@ namespace Repositories.EfCore
 
         public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters,bool trankChanges)
         {
-            var books = await FindAll(trankChanges).FilterBooks(bookParameters.MinPrice,bookParameters.MaxPrice)
+            var books = await FindAll(trankChanges)
+                .FilterBooks(bookParameters.MinPrice,bookParameters.MaxPrice)
+                .Search(bookParameters.SearchTerm)
                 .OrderBy(x => x.Id).ToListAsync();
             return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber,bookParameters.PageSize);
                 
