@@ -34,6 +34,7 @@ builder.Services.AddConfigureLoggerService();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddConfigureActionFilters();
 builder.Services.AddConfigureCors();
+builder.Services.AddConfigureDataShaper();
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor

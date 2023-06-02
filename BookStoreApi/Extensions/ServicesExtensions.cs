@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using Presentation.ActionFilters;
 using Repositories.Abstract;
 using Repositories.EfCore;
@@ -50,5 +51,9 @@ namespace BookStoreApi.Extensions
             });
         }
 
+        public static void AddConfigureDataShaper(this IServiceCollection services)
+        {
+            services.AddScoped<IDataShaper<BookDto>, DataShaper<BookDto>>();
+        }
     }
 }

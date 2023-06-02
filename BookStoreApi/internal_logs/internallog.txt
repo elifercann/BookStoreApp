@@ -103,3 +103,6 @@
 2023-06-02 17:42:09.8824 Info Message Template Auto Format enabled
 2023-06-02 17:42:09.9593 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-06-02 17:42:09.9819 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\ercan\source\repos\BookStoreApp\BookStoreApi\nlog.config
+2023-06-02 19:11:50.1883 Info Message Template Auto Format enabled
+2023-06-02 19:11:50.2617 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-06-02 19:11:50.2827 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\ercan\source\repos\BookStoreApp\BookStoreApi\nlog.config
