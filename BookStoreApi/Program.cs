@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Presentation.ActionFilters;
 using Services.Abstract;
+using Services.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -36,6 +37,7 @@ builder.Services.AddConfigureActionFilters();
 builder.Services.AddConfigureCors();
 builder.Services.AddConfigureDataShaper();
 builder.Services.AddCustomMediaType();
+builder.Services.AddScoped<IBookLinks, BookLinks>();
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor

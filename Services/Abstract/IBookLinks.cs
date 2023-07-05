@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.DTOs;
+using Entities.LinkModels;
+using Microsoft.AspNetCore.Http;
 
-namespace Services.Abstract
+namespace Services.Abstract;
+
+public interface IBookLinks
 {
-    internal interface IBookLinks
-    {
-    }
+    LinkResponse TryGenerateLinks(IEnumerable<BookDto> bookDtos, string fields, HttpContext httpContext);
 }

@@ -21,5 +21,6 @@ public class ValidateMediaTypeAtrribute : ActionFilterAttribute
         {
             context.Result = new BadRequestObjectResult($"Media type not present" + $"Please add Accept header with required media type.");
         }
+        context.HttpContext.Items.Add("AcceptHeaderMediaType", outptuMediaType);
     }
 }
