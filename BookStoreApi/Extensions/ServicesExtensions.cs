@@ -1,4 +1,6 @@
 ﻿using Entities.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Presentation.ActionFilters;
 using Repositories.Abstract;
@@ -39,6 +41,7 @@ namespace BookStoreApi.Extensions
         {
             services.AddScoped<ValidationFilterAttribute>();//IoC kaydı
             services.AddSingleton<LogFilterAttribute>();
+            services.AddScoped<ValidateMediaTypeAtrribute>();
 
 
         }
@@ -54,6 +57,25 @@ namespace BookStoreApi.Extensions
         public static void AddConfigureDataShaper(this IServiceCollection services)
         {
             services.AddScoped<IDataShaper<BookDto>, DataShaper<BookDto>>();
+        }
+
+        public static void AddCustomMediaType(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters.OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
+               
+                if(systemTextJsonOutputFormatter is not null)
+                {
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.ercan.hateoas+json");
+                }
+
+                var xmlOutputFormatter = config.OutputFormatters.OfType<XmlDataContractSerializerOutputFormatter>()?.FirstOrDefault();
+                if(xmlOutputFormatter is not null)
+                {
+                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.ercan.hateoas+xml");
+                }
+            });
         }
     }
 }

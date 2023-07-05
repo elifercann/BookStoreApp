@@ -35,6 +35,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddConfigureActionFilters();
 builder.Services.AddConfigureCors();
 builder.Services.AddConfigureDataShaper();
+builder.Services.AddCustomMediaType();
 
 var app = builder.Build();
 //ihtiyac duyulan servis bu sekilde alýnýyor
