@@ -1,6 +1,8 @@
 # BookStoreApp
 
-This project is a book application api.This project allows you to create RESTful APIs using ASP.NET Core. The project covers the basics of APIs, how to use ASP.NET Core, and development tools and techniques for APIs. The titles of the structures used in the project are as follows: 
+This project is a book application API. In addition to operations such as adding, deleting, updating books, the application content has been enriched by adding features such as search, filtering, sorting, sorting, paging, data manipulation, etc. In this project, it provides RESTful APIs using ASP.NET Core. The project covers the basics of APIs, how to use ASP.NET Core, and development tools and techniques for APIs. The titles of the structures used in the project are as follows: 
+
+## API Properties
 
 * API, HTTP, REST and RESTful
 * ASP.NET Core
