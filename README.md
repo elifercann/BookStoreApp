@@ -26,10 +26,10 @@ This project is a book application api.This project allows you to create RESTful
 
 To run this project, you must do the following:
 
-1-Install Visual Studio 2022.
-2-Download the project from GitHub.
-3-Open the project in Visual Studio.
-4-Press F5 to run the project.
+* Install Visual Studio 2022.
+* Download the project from GitHub.
+* Open the project in Visual Studio.
+* Press F5 to run the project.
 
 # Or 
  You can use git to download the repo to your computer.
